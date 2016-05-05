@@ -1,0 +1,12 @@
+bin
+build
+gen
+obj
+**/src/main/libs/
+local.properties
+.DS_Store
+.gradle
+.idea
+.metadata
+.settings
+*~
