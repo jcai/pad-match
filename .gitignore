@@ -10,3 +10,4 @@ local.properties
 .metadata
 .settings
 *~
+*.iml

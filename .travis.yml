@@ -1,0 +1,47 @@
+# using docker container
+sudo: false
+
+
+language: android
+
+android:
+  components:
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    - platform-tools
+    - tools
+
+    # The BuildTools version used by your project
+    - build-tools-23.0.3
+
+    # The SDK version used to compile your project
+    - android-23
+
+    # Specify at least one system image
+    # if you need to run emulator(s) during your tests
+    - sys-img-armeabi-v7a-android-19
+
+    - extra-android-support
+    - extra-android-m2repository
+
+# Emulator Management: Create, Start and Wait
+before_script:
+  # Get Android NDK
+  #
+  - git clone --depth=1 https://github.com/jcai/android-ndk.git $HOME/android-ndk-root
+  - export ANDROID_NDK_HOME=$HOME/android-ndk-root
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+script:
+  - ./gradlew test connectedAndroidTest  --info
+
+#cache directory
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
