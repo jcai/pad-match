@@ -42,6 +42,10 @@ public class MatcherTest extends AndroidTestCase{
     mDb.close();
     DB.destroy(mPath);
   }
+  public void test_NotNull(){
+    System.out.println("version .... "+Matcher.nativeGetDeviceId());
+    Assert.assertNotNull(Matcher.nativeGetDeviceId());
+  }
   public void test_matchOneToOne() throws Exception{
     byte[] tmpByte = new byte[1];
     Assert.assertEquals(100,matcher.matchOneToOne(tmpByte,tmpByte));
